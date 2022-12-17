@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using static SpaceShipController; // Add this line to include the SpaceShipController class
 
-
 public class RefuelStation : MonoBehaviour
 {
     // The space ship controller script attached to the space ship game object
@@ -14,6 +13,9 @@ public class RefuelStation : MonoBehaviour
 
     // The range at which the space ship can refuel
     public float refuelRange = 10.0f;
+
+    // The UIController script attached to the UI canvas game object
+    public UIController uiController;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,9 @@ public class RefuelStation : MonoBehaviour
 
                     // Refuel the space ship
                     shipController.Refuel(refuelAmount);
+
+                    // Open the UI
+                    uiController.OpenUI();
                 }
             }
         }
@@ -51,5 +56,4 @@ public class RefuelStation : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, refuelRange);
     }
-
 }

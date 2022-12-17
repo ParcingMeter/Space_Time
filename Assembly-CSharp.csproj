@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Assets\Sctipts\SpaceShipController.cs" />
     <Compile Include="Assets\Sctipts\RefuelStation.cs" />
+    <Compile Include="Assets\Sctipts\UIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

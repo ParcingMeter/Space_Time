@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static RefuelStation;
+using UnityEngine.UI;
 
 public class SpaceShipController : MonoBehaviour
 {
@@ -19,6 +19,15 @@ public class SpaceShipController : MonoBehaviour
 
     // A flag indicating whether the space ship is refueling
     public bool isRefueling = false;
+
+        // A flag variable to track the state of the UI
+    public bool uiOpen = false;
+
+    // The Text component used to display the fuel level
+    public Text fuelText;
+
+    // The Text component used to display a message when the ship runs out of fuel
+    public Text outOfFuelText;
 
     // The Refuel() method refuels the space ship
     public void RefuelShip(float amount)
@@ -49,17 +58,24 @@ public class SpaceShipController : MonoBehaviour
     {
         // Get the Rigidbody component attached to the space ship game object
         rb = GetComponent<Rigidbody2D>();
+
+        // Start the fuel UI update coroutine
+        StartCoroutine(UpdateFuelUI());
     }
 
     // Update is called once per frame
     void Update()
     {
         // Check if the space ship has any fuel left
-        if (fuel > 0)
+        if (fuel > 0 && !uiOpen)
         {
             // Get the horizontal and vertical input axes
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+
+            // If the fuel level is above 0, disable the out of fuel text
+            outOfFuelText.enabled = false;
+
 
             // Calculate the force to apply to the Rigidbody based on the input axes
             Vector3 force = new Vector3(horizontalInput, verticalInput) * speed;
@@ -78,8 +94,12 @@ public class SpaceShipController : MonoBehaviour
             // If the space ship has no fuel left, stop it from moving
             rb.velocity = Vector3.zero;
             rb.angularVelocity = 0.0f;
+
+            // Enable the out of fuel text
+            outOfFuelText.enabled = true;
         }
     }
+
     public void Refuel(float amount)
     {
         // Increase the fuel level by the specified amount
@@ -96,8 +116,18 @@ public class SpaceShipController : MonoBehaviour
         rb.angularVelocity = 0.0f;
     }
 
+    // A coroutine that updates the fuel level display
+    IEnumerator UpdateFuelUI()
+    {
+        while (true)
+        {
+            // Update the fuel level display
+            fuelText.text = "Fuel: " + fuel.ToString("F1") + "%";
 
-
+            // Wait for a few seconds before updating the display again
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 }
 
 
