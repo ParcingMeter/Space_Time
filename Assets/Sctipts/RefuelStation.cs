@@ -18,11 +18,8 @@ public class RefuelStation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Get the SpaceShipController script attached to the space ship game object
-        shipController = GetComponent<SpaceShipController>();
     }
 
-    // Update is called once per frame
     // Update is called once per frame
     void Update()
     {
